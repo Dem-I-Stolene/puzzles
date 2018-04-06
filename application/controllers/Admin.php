@@ -37,6 +37,7 @@ class Admin extends CI_Controller {
 		}
 
  		$this->load->view('admin_user_create');
+ 	}
 	public function login()
 	{
 		
