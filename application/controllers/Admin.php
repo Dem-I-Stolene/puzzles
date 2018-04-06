@@ -6,11 +6,26 @@ class Admin extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		# lelel dette er ændringen
-		echo $this->uri->segment(1);
+
+		if ($this->uri->segment(2) !== 'login') {
+			if (!$this->loader->user) {
+				redirect('admin/login');
+			}
+		} else {
+			if ($this->loader->user) {
+				redirect('admin');
+			}
+		}
+
+		echo $this->uri->segment(2);
 	}
 
 	public function index()
+	{
+		
+	}
+
+	public function login()
 	{
 		
 	}
