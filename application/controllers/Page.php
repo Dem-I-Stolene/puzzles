@@ -5,6 +5,11 @@ class Page extends CI_Controller {
 
 	public function index()
 	{
-		$this->loader->view('welcome_message');
+		echo $this->uri->segment(1);
+	}
+
+	public function guides($guide = null)
+	{
+		$this->loader->view('guides');
 	}
 }
