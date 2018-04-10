@@ -18,11 +18,13 @@ class Admin extends CI_Controller {
 		}
 	}
 
-	public function index(){
+	public function index()
+	{
 		
 	}
 
-	public function create(){
+	public function create()
+	{
 		if($this->input->post()){
 			$this->fval->set_rules('formEmail','E-Mail','required|valid_email|trim');
 			$this->fval->set_rules('formPassword','Password','required|trim');
@@ -99,5 +101,27 @@ class Admin extends CI_Controller {
 
 		$this->loader->view('admin/guide_category_update', $data);
 	}
-}
 
+	// Guides
+	public function guide_create()
+	{
+		if ($this->input->post('create')) {
+			$this->fval->set_rules('title', 'Titel', 'required');
+			$this->fval->set_rules('content', 'Indhold', 'required');
+
+			if ($this->fval->run()) {
+				$formdata = array(
+					'g_name' => $this->input->post('title'),
+					'g_content' => $this->input->post('content'),
+					'g_category' => $this->input->post('category')
+				);
+
+				$this->db->insert('guides', $formdata);
+			}
+		}
+
+		$data['categories'] = $this->db->get('guides_category')->result_array();
+
+		$this->loader->view('admin/guide_create', $data);
+	}
+}
