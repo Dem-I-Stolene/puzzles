@@ -24,6 +24,6 @@ class Loader_model extends CI_Model {
 			$content = 'page_not_found';
 		}
 		
-		$this->load->view($content, $data);
+		$this->parser->parse($content, $data);
 	}
 }

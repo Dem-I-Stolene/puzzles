@@ -16,8 +16,6 @@ class Admin extends CI_Controller {
 				redirect('admin');
 			}
 		}
-
-		echo $this->uri->segment(2);
 	}
 
 	public function index(){
@@ -33,14 +31,73 @@ class Admin extends CI_Controller {
 			if ($this->fval->run()) {
 				echo "lele";
 			}
-
 		}
 
  		$this->load->view('admin_user_create');
  	}
+
 	public function login()
 	{
 		
+	}
+
+	// Guide categories
+	public function guide_category_create()
+	{
+		if ($this->input->post('create')) {
+			$this->fval->set_rules('title', 'Title', 'required');
+
+			if ($this->fval->run()) {
+				$formdata = array(
+					'gc_name' => $this->input->post('title'),
+					'gc_desc' => $this->input->post('content')
+				);
+
+				$this->db->insert('guides_category', $formdata);
+			}
+		}
+		$this->loader->view('admin/guide_category_create');
+	}
+
+	public function guide_category_delete()
+	{
+		if ($this->input->post('delete')) {
+			foreach ($this->input->post('categories') as $value) {
+				$this->db->where('gc_id', $value)
+					->delete('guides_category');
+
+				$this->db->where('g_category', $value)
+					->delete('guides');
+			}
+		}
+		$data['categories'] = $this->db->get('guides_category')->result_array();
+
+		$this->loader->view('admin/guide_category_delete', $data);
+	}
+
+	public function guide_category_update($id = null)
+	{
+		if (!$id) {
+			echo "giv id plz";
+			exit;
+		}
+
+		if ($this->input->post('update')) {
+			$formdata = array(
+				'gc_name' => $this->input->post('title'),
+				'gc_desc' => $this->input->post('content')
+			);
+
+			$this->db->where('gc_id', $id)
+				->update('guides_category', $formdata);
+		}
+
+		$data['category'] =
+			$this->db->where('gc_id', $id)
+				->get('guides_category')
+					->result_array();
+
+		$this->loader->view('admin/guide_category_update', $data);
 	}
 }
 
