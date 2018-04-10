@@ -12,15 +12,28 @@ class User extends CI_Controller {
 				$formEmail 		= $this->input->post('formEmail');
 				$formPassword 	= $this->input->post('formPassword');
 
+
 				$this->db->where('u_email', $formEmail);
 				$sqlQuery = $this->db->get('users');
 
+				$hash = '$2y$10$5QA4uNnbGduZR3ReaSkFvuHh9FhqI8/1rm4Qnb8E0vr3ewRvNDnoW';
+
+				
+				#if(password_verify('smoelf97', $hash)){
+				#	echo "Success!";
+				#}else{
+				#	echo "Fail!";
+				#}
+
 				if($sqlQuery->num_rows()){
 					$dbFetch = $sqlQuery->row();
-					if(password_verify($formPassword,$dbFetch->u_password)){
-						echo "password correct!";
-					}else{
-						echo "fail!";
+					echo password_hash('smoelf97', PASSWORD_DEFAULT);
+					echo '<br>';
+					echo $dbFetch->u_password;
+
+
+					if(password_verify($formPassword, password_hash('smoelf97', PASSWORD_DEFAULT))){
+						echo "success";
 					}
 				}
 			}
