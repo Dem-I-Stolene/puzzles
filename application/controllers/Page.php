@@ -23,4 +23,12 @@ class Page extends CI_Controller {
 			print_r($data);
 		echo "</pre>";
 	}
+
+	public function kontakt()
+	{
+		if ($this->input->post('t')) {
+			$this->mm->send_mail($this->input->post('mail'),$this->input->post('subject'),$this->input->post('message'));
+		}
+		$this->loader->view('kontakt');
+	}
 }
