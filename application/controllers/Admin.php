@@ -81,7 +81,7 @@ class Admin extends CI_Controller {
 	{
 		if (!$id) {
 			echo "giv id plz";
-			exit;
+			
 		}
 
 		if ($this->input->post('update')) {
@@ -123,5 +123,52 @@ class Admin extends CI_Controller {
 		$data['categories'] = $this->db->get('guides_category')->result_array();
 
 		$this->loader->view('admin/guide_create', $data);
+	}
+
+	public function guide_delete()
+	{
+		if ($this->input->post('delete')) {
+			foreach ($this->input->post('guides') as $key => $value) {
+				$this->db->where('g_id', $value)->delete('guides');
+			}
+		}
+
+		$data['categories'] = $this->db->get('guides_category')->result_array();
+
+		foreach ($data['categories'] as $key => $value) {
+			$data['categories'][$key]['guides'] = $this->db->where('g_category', $value['gc_id'])->get('guides')->result_array();
+		}
+
+		$this->loader->view('admin/guide_delete', $data);
+	}
+
+	public function guide_update($guide = null)
+	{
+		if ($this->input->post('update')) {
+			$this->fval->set_rules('title', 'Titel', 'required');
+			$this->fval->set_rules('content', 'Indhold', 'required');
+
+			if ($this->fval->run()) {
+				$this->db->where('g_id',
+					($guide && is_numeric($guide))?
+						$guide
+					: $this->db->get('guides')
+						->first_row()->g_id
+				)->update('guides', array(
+					'g_name' => $this->input->post('title'),
+					'g_content' => $this->input->post('content')
+				));
+			}
+		}
+
+		$data['guide'] = ($guide && is_numeric($guide))?
+			$this->db->where('g_id', $guide)
+				->get('guides')
+					->result_array()
+			: $this->db->limit(1)
+				->get('guides')
+					->result_array();
+
+		$this->loader->view('admin/guide_update', $data);
 	}
 }
