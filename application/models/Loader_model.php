@@ -27,6 +27,7 @@ class Loader_model extends CI_Model {
 		// General variables
 		$data['title'] = (isset($data['title']))? $data['title'] : 'Puzzle';
 		$data['logo'] = base_url('assets/images/logo.png');
+		$data['css'][]['style'] = 'var';
 		$data['css'][]['style'] = 'main';
 
 		// Fix css names

@@ -9,11 +9,18 @@ nav {
 	width: auto;
 }
 
-nav a {
+nav .nav-item {
 	font-family: var(--fhead);
 	font-weight: 900;
 	color: black;
 	margin-top: 55px;
 	margin-left: 20px;
-	font-size: 20px;
+	font-size: 16.5px;
+	text-transform: uppercase;
+	transition: color 200ms linear;
+}
+
+nav .nav-item:hover {
+	color: var(--dgrey);
+	transition: color 200ms linear;
 }

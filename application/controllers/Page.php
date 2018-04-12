@@ -19,9 +19,10 @@ class Page extends CI_Controller {
 				$this->db->where('g_category', $guide)
 					->get('guides')->result_array();
 		}
-		echo "<pre>";
-			print_r($data);
-		echo "</pre>";
+
+		$data['css'][]['style'] = 'guides';
+
+		$this->loader->view(($guide)? 'guide' : 'guides', $data);
 	}
 
 	public function kontakt()
@@ -30,5 +31,15 @@ class Page extends CI_Controller {
 			$this->mm->send_mail($this->input->post('mail'),$this->input->post('subject'),$this->input->post('message'));
 		}
 		$this->loader->view('kontakt');
+	}
+
+	public function index()
+	{
+		$this->loader->view('forside');
+	}
+
+	public function p404()
+	{
+		$this->loader->view();
 	}
 }
