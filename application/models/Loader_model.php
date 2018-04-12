@@ -38,6 +38,7 @@ class Loader_model extends CI_Model {
 		$this->parser->parse('template/head', $data);
 		$this->parser->parse('template/nav', $data);
 		$this->parser->parse($content, $data);
+		$this->parser->parse('template/footer', $data);
 		$this->parser->parse('template/end', $data);
 	}
 }
