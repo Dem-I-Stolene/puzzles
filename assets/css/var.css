@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+
+:root {
+	/* Fonts */
+	--fstd: 'Josefin Sans';
+	--fhead: 'Alegreya Sans SC';
+
+	/* Colors */
+	--dpink: #eb0a8f;
+	--mpink: #f483c5;
+	--lpink: #f9bcde;
+	--dgrey: #525659;
+	--lgrey: #fafafa;
+}
